@@ -16,6 +16,7 @@ RUN apt-get update && apt-get install -y \
         libmemcached-dev \
         cron git mariadb-client unzip \
         libcouchbase-dev build-essential \
+        libmcrypt-dev libmcrypt4 \
         --no-install-recommends
 
 RUN docker-php-ext-install \
@@ -32,9 +33,9 @@ RUN docker-php-ext-install \
 RUN docker-php-ext-configure \
 	gd --with-jpeg-dir=/usr/local/ --with-freetype-dir=/usr/include/
 
-RUN pecl install apcu couchbase imagick redis memcached calendar
+RUN pecl install apcu couchbase imagick redis memcached calendar mcrypt-1.0.3
 
-RUN docker-php-ext-enable apcu couchbase imagick redis memcached calendar
+RUN docker-php-ext-enable apcu couchbase imagick redis memcached calendar mcrypt
 
 RUN usermod -u 1000 www-data
 RUN usermod -G staff www-data
